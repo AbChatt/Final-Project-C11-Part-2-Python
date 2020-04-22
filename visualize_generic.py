@@ -5,14 +5,14 @@ B. Chan, D. Fleet
 ===========================================================
  COMPLETE THIS TEXT BOX:
 
- Student Name:
- Student number:
- UtorID:
+ Student Name: Abhishek Chatterjee
+ Student number: 1004820615
+ UtorID: chatt114
 
  I hereby certify that the work contained here is my own
 
 
- ____________________
+ _Abhishek Chatterjee_
  (sign with your name)
 ===========================================================
 """

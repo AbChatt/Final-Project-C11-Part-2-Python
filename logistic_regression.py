@@ -5,14 +5,14 @@ B. Chan, D. Fleet
 ===========================================================
  COMPLETE THIS TEXT BOX:
 
- Student Name:
- Student number:
- UtorID:
+ Student Name: Abhishek Chatterjee
+ Student number: 1004820615
+ UtorID: chatt114
 
  I hereby certify that the work contained here is my own
 
 
- ____________________
+ _Abhishek Chatterjee_
  (sign with your name)
 ===========================================================
 """
@@ -80,7 +80,34 @@ class LogisticRegression:
         (N, D) = X.shape
         # ====================================================
         # TODO: Implement your solution within the box
+
+        alpha_inv = 0
+        beta_inv = 0    # change these values to formulas
         
+        X = np.hstack((np.ones(shape = (np.shape(X)[0], 1), dtype = float), X))
+
+        C_inv = np.zeroes((np.shape(self.parameters)[0], np.shape(self.parameters)[0]), dtype = float)
+
+        C_inv[0][0] = beta_inv
+
+        for i in range(1, np.shape(self.parameters)[0]):
+            C_inv[i][i] = alpha_inv
+        
+        parameters_transpose = np.transpose(self.parameters)
+        nll = 0.5 * (parameters_transpose @ C_inv @ self.parameters)
+
+        for j in range(np.shape(X)[0]):
+            single_x = X[j, ].reshape(1, np.shape(X)[1])
+            nll  = nll - (y[j] * log_sigmoid_class_1(single_x @ self.parameters) + (1 - y[j]) * log_sigmoid_class_0(single_x @ self.parameters))
+        
+        grad = np.matmul(C_inv, self.parameters)
+
+        for k in range(np.shape(X)[0]):
+            single_x = X[k, ].reshape(1, np.shape(X)[1])
+            grad = grad + (sigmoid(single_x @ self.parameters) - y[k]) * np.transpose(single_x)
+        
+        nll = nll[0][0]
+
         # ====================================================
 
         return nll, grad
