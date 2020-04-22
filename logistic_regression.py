@@ -98,13 +98,13 @@ class LogisticRegression:
 
         for j in range(np.shape(X)[0]):
             single_x = X[j, ].reshape(1, np.shape(X)[1])
-            nll  = nll - (y[j] * log_sigmoid_class_1(single_x @ self.parameters) + (1 - y[j]) * log_sigmoid_class_0(single_x @ self.parameters))
+            nll  = nll - (y[j] * log_sigmoid_class_1(np.matmul(single_x, self.parameters)) + (1 - y[j]) * log_sigmoid_class_0(np.matmul(single_x @ self.parameters)))
         
         grad = np.matmul(C_inv, self.parameters)
 
         for k in range(np.shape(X)[0]):
             single_x = X[k, ].reshape(1, np.shape(X)[1])
-            grad = grad + (sigmoid(single_x @ self.parameters) - y[k]) * np.transpose(single_x)
+            grad = grad + (sigmoid(np.matmul(single_x @ self.parameters)) - y[k]) * np.transpose(single_x)
         
         nll = nll[0][0]
 
