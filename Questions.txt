@@ -1,0 +1,38 @@
+===========================================================
+ COMPLETE THIS TEXT BOX:
+
+ Student Name:
+ Student number:
+ UtorID:
+
+ I hereby certify that the work contained here is my own
+(Moss will automatically be run on all submitted and answers)
+
+
+ ____________________
+ (sign with your name)
+===========================================================
+
+Answer The Following Questions:
+
+Visualization:
+---------------
+
+1. Do you expect logistic regression to perform well on generic_1?   Why or why not?
+
+2. Do you expect it to do well on generic_2?  Why or why not?
+
+3. Why can’t we directly visualize the orchid dataset?  
+
+4. Briefly specify some ways that you might be able visualize it to some extent?
+
+
+Final Analysis:
+---------------
+
+1. Orchid dataset: Does logistic regression prform well on this dataset? 
+
+2. What are the training and validation accuracies for the Orchid dataset, and do they appear reasonable?  Explain your answer.
+
+3. Generic datasets: Does logistic regression do well on these two datasets? Do the actual results agreewith your initial hypotheses?
+
