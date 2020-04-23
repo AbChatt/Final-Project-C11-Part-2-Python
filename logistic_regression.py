@@ -81,24 +81,38 @@ class LogisticRegression:
         # ====================================================
         # TODO: Implement your solution within the box
 
-        X = np.hstack((np.ones(shape = (np.shape(X)[0], 1), dtype = float), X))
+        # wait for instructor to confirm that w is KxD+1 and not (K+1)x(D+1) -> modify loop if so to not use bias term and stay in bounds
 
-        C_inv = np.zeroes((np.shape(self.parameters)[0], np.shape(self.parameters)[0]), dtype = float)
-        
-        parameters_transpose = np.transpose(self.parameters)
-        nll = 0.5 * (parameters_transpose @ C_inv @ self.parameters)
+        unique_labels = np.unique(y)
+        y_i_k = np.zeroes(shape = (N, self.num_classes))
+        nll = 0
+        grad = np.ndarray(shape = (self.num_classes, D + 1))
 
-        for j in range(np.shape(X)[0]):
-            x_i = X[j, ].reshape(1, np.shape(X)[1])
-            nll  = nll - (y[j] * softmax(np.matmul(x_i, self.parameters)) + (1 - y[j]) * softmax(np.matmul(x_i @ self.parameters)))
+        # Representing one_hot_decoder from handout as a matrix
+        for i in range(N):
+            index = unique_labels.index(y[i])
+            y_i_k[i][index] = 1
         
-        grad = np.matmul(C_inv, self.parameters)
+        # nested summations are like nested for loops
+        # multiply -1 at end
+        for i in range(N):
+            for j in range(self.num_classes):
+                nll = nll + y_i_k[i][j] * np.log(softmax(np.matmul((self.parameters[j + 1]).T), X[i]))
+        
+        nll = -1 * nll
 
-        for k in range(np.shape(X)[0]):
-            x_i = X[k, ].reshape(1, np.shape(X)[1])
-            grad = grad + (softmax(np.matmul(x_i @ self.parameters)) - y[k]) * np.transpose(x_i)
-        
-        nll = nll[0][0]
+        grad_w_k = 0
+
+        # calculate gradient using equation 10 in handout
+        # multiple -1 at end
+        # this formula includes bias so iterate over all values of self.parameters
+        for k in range(self.num_classes):  # index of weight we are differentiating with respect to
+            for l in range(N):
+                grad_w_k = grad_w_k + np.matmul(y_i_k[l][k] - softmax(np.matmul((self.parameters[k].T), X[l])), X[l])
+
+            grad_w_k = -1 * grad_w_k
+            grad[k] = grad_w_k
+            grad_w_k = 0
 
         # ====================================================
 

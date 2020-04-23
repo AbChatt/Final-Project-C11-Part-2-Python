@@ -1,15 +1,15 @@
 ===========================================================
  COMPLETE THIS TEXT BOX:
 
- Student Name:
- Student number:
- UtorID:
+ Student Name: Abhishek Chatterjee
+ Student number: 1004820615
+ UtorID: chatt114
 
  I hereby certify that the work contained here is my own
 (Moss will automatically be run on all submitted and answers)
 
 
- ____________________
+ _Abhishek Chatterjee_
  (sign with your name)
 ===========================================================
 
@@ -19,12 +19,17 @@ Visualization:
 ---------------
 
 1. Do you expect logistic regression to perform well on generic_1?   Why or why not?
+Yes we can draw linear decision boundaries between each class that completely encompass the members of the class with no outliers
 
 2. Do you expect it to do well on generic_2?  Why or why not?
+No, because the decision boundaries between each class are elipsoidal in nature. Logistic regression works well on linear decision boundaries
 
-3. Why can’t we directly visualize the orchid dataset?  
+3. Why can’t we directly visualize the orchid dataset?
+We cannot plot 4 dimensional inputs onto a graph  
 
 4. Briefly specify some ways that you might be able visualize it to some extent?
+- Reduce dimensionality of data using PCA by mapping to a lower subspace and then plot data
+- Split measurements into sepal data and petal data and make 2 plots of 2D inputs
 
 
 Final Analysis:
