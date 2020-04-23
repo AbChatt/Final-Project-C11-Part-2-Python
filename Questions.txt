@@ -36,8 +36,12 @@ Final Analysis:
 ---------------
 
 1. Orchid dataset: Does logistic regression prform well on this dataset? 
+No it performs badly as training and validation accuracy are less than 50%
 
 2. What are the training and validation accuracies for the Orchid dataset, and do they appear reasonable?  Explain your answer.
+My training and validation accuracies are 33%. It seems reasonable as the decision boundaries are not linear for this dataset
 
 3. Generic datasets: Does logistic regression do well on these two datasets? Do the actual results agreewith your initial hypotheses?
+No, logistic regression does not work well on these 2 datasets. However, in line with my hypothesis, generic 2 performs better
+
 

@@ -81,39 +81,39 @@ class LogisticRegression:
         # ====================================================
         # TODO: Implement your solution within the box
 
-        # wait for instructor to confirm that w is KxD+1 and not (K+1)x(D+1) -> modify loop if so to not use bias term and stay in bounds
-
         unique_labels = np.unique(y)
-        y_i_k = np.zeroes(shape = (N, self.num_classes))
+        y_i_k = np.zeros(shape=(N, self.num_classes))        # (N, K) -> [[size K each, N of these]]
         nll = 0
-        grad = np.ndarray(shape = (self.num_classes, D + 1))
+        grad = np.ndarray(shape = (self.num_classes, D + 1))    # (K, D+1) -> [[size D + 1 each, K of these]]
+
+        print(np.shape(self.parameters))
 
         # Representing one_hot_decoder from handout as a matrix
         for i in range(N):
-            index = unique_labels.index(y[i])
+            index = np.where(unique_labels == y[i])
             y_i_k[i][index] = 1
         
-        # nested summations are like nested for loops
+        # nested summations are like matrix multiplication
         # multiply -1 at end
-        for i in range(N):
-            for j in range(self.num_classes):
-                nll = nll + y_i_k[i][j] * np.log(softmax(np.matmul((self.parameters[j + 1]).T), X[i]))
+        nll = nll + y_i_k * np.log(softmax(np.matmul(X, (np.delete(self.parameters, 0, axis=1).T))))   # remove bias term
         
         nll = -1 * nll
 
-        grad_w_k = 0
+        grad_w_k = np.ndarray(shape = (self.num_classes, D))
 
         # calculate gradient using equation 10 in handout
         # multiple -1 at end
-        # this formula includes bias so iterate over all values of self.parameters
-        for k in range(self.num_classes):  # index of weight we are differentiating with respect to
-            for l in range(N):
-                grad_w_k = grad_w_k + np.matmul(y_i_k[l][k] - softmax(np.matmul((self.parameters[k].T), X[l])), X[l])
+        
+        grad_w_k = np.matmul((y_i_k - softmax(np.matmul(X, (np.delete(self.parameters, 0, axis=1).T)))).T, X)
 
-            grad_w_k = -1 * grad_w_k
-            grad[k] = grad_w_k
-            grad_w_k = 0
+        bias_terms = ((self.parameters).T)[0]
 
+        for i in range(self.num_classes):
+            np.append(grad[i], bias_terms[i])
+            for j in range(len(grad_w_k[i])):
+                np.append(grad[i], grad_w_k[i][j])
+
+        grad = -1 * grad
         # ====================================================
 
         return nll, grad

@@ -56,9 +56,14 @@ def train(train_X,
     # TODO: Implement your solution within the box
     # Step 1: Initialize model and initialize weights
 
+    model = LogisticRegression(np.shape(train_X)[1], len(np.unique(train_y)))
+    model.init_weights(factor, bias)
+
     # Step 2: Train the model
+    model.learn(train_X, train_y, num_epochs, step_size, check_grad, verbose)
 
     # Step 3: Evaluate training performance
+    train_probs = model.predict(train_X)
 
     # ====================================================
     train_preds = np.argmax(train_probs, axis=1)
@@ -71,6 +76,8 @@ def train(train_X,
         # TODO: Implement your solution within the box
         # Evaluate validation performance
 
+        val_probs = model.predict(val_X)
+
         # ====================================================
         val_preds = np.argmax(val_probs, axis=1)
         validation_accuracy = 100 * np.mean(val_preds == val_y.flatten())
@@ -82,7 +89,7 @@ if __name__ == "__main__":
     np.random.seed(seed)
 
     # Support orchid, generic_1, generic_2
-    dataset = "orchid"
+    dataset = "generic_2"
 
     assert dataset in ("orchid", "generic_1", "generic_2"), f"Invalid dataset: {dataset}"
 
