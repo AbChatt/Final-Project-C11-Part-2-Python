@@ -81,30 +81,22 @@ class LogisticRegression:
         # ====================================================
         # TODO: Implement your solution within the box
 
-        alpha_inv = 0
-        beta_inv = 0    # change these values to formulas
-        
         X = np.hstack((np.ones(shape = (np.shape(X)[0], 1), dtype = float), X))
 
         C_inv = np.zeroes((np.shape(self.parameters)[0], np.shape(self.parameters)[0]), dtype = float)
-
-        C_inv[0][0] = beta_inv
-
-        for i in range(1, np.shape(self.parameters)[0]):
-            C_inv[i][i] = alpha_inv
         
         parameters_transpose = np.transpose(self.parameters)
         nll = 0.5 * (parameters_transpose @ C_inv @ self.parameters)
 
         for j in range(np.shape(X)[0]):
-            single_x = X[j, ].reshape(1, np.shape(X)[1])
-            nll  = nll - (y[j] * log_sigmoid_class_1(np.matmul(single_x, self.parameters)) + (1 - y[j]) * log_sigmoid_class_0(np.matmul(single_x @ self.parameters)))
+            x_i = X[j, ].reshape(1, np.shape(X)[1])
+            nll  = nll - (y[j] * softmax(np.matmul(x_i, self.parameters)) + (1 - y[j]) * softmax(np.matmul(x_i @ self.parameters)))
         
         grad = np.matmul(C_inv, self.parameters)
 
         for k in range(np.shape(X)[0]):
-            single_x = X[k, ].reshape(1, np.shape(X)[1])
-            grad = grad + (sigmoid(np.matmul(single_x @ self.parameters)) - y[k]) * np.transpose(single_x)
+            x_i = X[k, ].reshape(1, np.shape(X)[1])
+            grad = grad + (softmax(np.matmul(x_i @ self.parameters)) - y[k]) * np.transpose(x_i)
         
         nll = nll[0][0]
 

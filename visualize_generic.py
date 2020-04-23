@@ -39,6 +39,20 @@ def visualize_2d_data(X, y):
     # ====================================================
     # TODO: Implement your solution within the box
 
+    unique_classes = np.unique(y)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+
+    for class_i in unique_classes:
+        class_i_data = X[y.flatten() == class_i]
+        ax.scatter(class_i_data[:, 0],
+                   class_i_data[:, 1],
+                   s=1, label = class_i)
+
+    ax.legend()    
+    plt.show()
+
     # ====================================================
 
 
